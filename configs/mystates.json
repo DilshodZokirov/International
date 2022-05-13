@@ -1,0 +1,28 @@
+{
+    "1328453620": {
+        "1328453620": {
+            "state": "SpeakingState:final",
+            "data": {
+                "lang": "uz",
+                "name": "Dilshod",
+                "phone": "+998915477339",
+                "chat_id": 1328453620,
+                "user_id": "1328453620"
+            },
+            "bucket": {}
+        }
+    },
+    "1995402287": {
+        "1995402287": {
+            "state": "SpeakingState:practice_debate",
+            "data": {
+                "lang": "uz",
+                "chat_id": 1995402287,
+                "name": "Dilshod",
+                "phone": "998900370530",
+                "user_id": "1328453620"
+            },
+            "bucket": {}
+        }
+    }
+}
