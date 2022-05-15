@@ -1,10 +1,11 @@
+
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
 from buttons.inline import language_inline_markup
 from db.model_user import User
-from buttons.buttons import SETTING_TEXT, settings_markup, EDIT_USERNAME_TEXT, EDIT_LANGUAGE_TEXT, BACK, home_menu, \
-    MY_CABINET_TEXT, BACK_TEXT
+from db.model_admin import Admin
+from buttons.buttons import SETTING_TEXT, settings_markup, EDIT_USERNAME_TEXT, EDIT_LANGUAGE_TEXT, BACK, home_menu, MY_CABINET_TEXT
 from dispatch import dp
 from states import FinalRegisterState, SettingState
 from aiogram.types import ReplyKeyboardRemove
@@ -21,7 +22,7 @@ async def settings_handlers(message: types.Message, state: FSMContext):
 
 @dp.message_handler(lambda message: str(message.text).__eq__(EDIT_USERNAME_TEXT),state=SettingState.begin)
 async def begin_edit_fullname(message: types.Message, state:FSMContext):
-    user = User(chat_id=str(message.chat.id)).registered_user()
+    user = Admin(chat_id=str(message.chat.id)).select_admin_registered()
     username = user[2]
     await message.bot.send_message(text=f"Hozirgi ismingiz {username}", chat_id=message.chat.id)
     text = 'Yangi Ismni kiriting'
@@ -31,15 +32,15 @@ async def begin_edit_fullname(message: types.Message, state:FSMContext):
 
 @dp.message_handler(state=SettingState.fullname)
 async def edit_fullname(message: types.Message, ):
-    User(name=message.text, chat_id=str(message.chat.id)).update_name()
+    Admin(name=message.text, chat_id=str(message.chat.id)).update_name()
     await SettingState.begin.set()
     text = f"Ismingiz {message.text} ga Muvafaqiyatli o'zgartirildi"
     await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=settings_markup())
 
 
-@dp.message_handler(lambda message: str(message.text).__eq__(BACK_TEXT),state=SettingState.begin)
+@dp.message_handler(lambda message: str(message.text).__eq__(BACK),state=SettingState.begin)
 async def back_from_settings(message:types.Message):
-    text = "Marxamat bosh"
+    text = "Marxamat bosh menu"
     await FinalRegisterState.begin.set()
     await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=home_menu())
 
@@ -55,7 +56,7 @@ async def begin_lang_edit(message: types.Message):
 
 @dp.callback_query_handler(state=SettingState.lang)
 async def lang_edit(query: types.CallbackQuery):
-    User(language=query.data).update_language()
+    Admin(language=query.data).update_language()
     await FinalRegisterState.begin
     text = "Sizning tilingiz muvafaqiyatli o'zgartirildi"
     await query.bot.send_message(text=text, chat_id=query.message.chat.id, reply_markup=home_menu())
@@ -63,7 +64,7 @@ async def lang_edit(query: types.CallbackQuery):
 
 @dp.message_handler(lambda message: str(message.text).__eq__(MY_CABINET_TEXT), state=SettingState.begin)
 async def show_profile(message: types.Message):
-    user = User(chat_id=str(message.chat.id)).registered_user()
+    user = Admin(chat_id=str(message.chat.id)).select_admin_registered()
     username = user[2]
     user_lang = user[1]
     phone = user[3]

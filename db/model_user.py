@@ -25,3 +25,13 @@ class User(Transactions):
         sql: str = "select * from users where chat_id=%s"
         params = (self.chat_id,)
         return self.execute(sql, params, fetchone=True)
+
+    def update_name(self):
+        sql: str = "update users set name= %s where chat_id = %s"
+        params = (self.name, self.chat_id)
+        self.execute(sql, params, commit=True)
+
+    def update_language(self):
+        sql: str = "update users set language= %s where chat_id = %s"
+        params = (self.language, self.chat_id)
+        self.execute(sql, params, commit=True)

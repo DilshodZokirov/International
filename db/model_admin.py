@@ -22,3 +22,13 @@ class Admin(Transactions):
         sql: str = "insert into admin(id, name, phone, language,chat_id) VALUES (%s,%s,%s,%s,%s)"
         params = (self.id, self.name, self.phone, self.language, self.chat_id)
         return self.execute(sql, params, commit=True)
+
+    def update_name(self):
+        sql: str = "update admin set name= %s where chat_id = %s"
+        params = (self.name, self.chat_id)
+        self.execute(sql, params, commit=True)
+
+    def update_language(self):
+        sql: str = "update admin set language= %s where chat_id = %s"
+        params = (self.language, self.chat_id)
+        self.execute(sql, params, commit=True)

@@ -58,7 +58,7 @@ AMERICAN = KeyboardButton(text=AMERICAN_TEXT)
 
 def settings_markup():
     row1 = [EDIT_LANGUAGE, EDIT_USERNAME]
-    row2 = [EDIT_PHONE, EDIT_LEVEL]
+    row2 = [EDIT_LEVEL]
     row3 = [MY_CABINET, BACK]
     keyboard = [row1, row2, row3]
     return ReplyKeyboardMarkup(resize_keyboard=True, keyboard=keyboard)

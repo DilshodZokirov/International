@@ -35,6 +35,9 @@ class WritingState(StatesGroup):
 
 class SettingState(StatesGroup):
     begin = State()
+    fullname = State()
+    lang = State()
+    level = State()
 
 
 class AdminState(StatesGroup):
