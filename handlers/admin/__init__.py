@@ -1,12 +1,19 @@
+from .delete import *
+from .create import *
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from buttons.buttons import phone_number_button
+from buttons.buttons import phone_number_button, admin_markup, CREATE_TEXT, create_markup
 from buttons.inline import language_inline_markup
 from db.mapper import admin_insert
-from db.model_admin import Admin
-from dispatch import dp
+from dispatch import dp, bot
 from states import AdminState
+
+
+# @dp.message_handler(commands='aaa', state="*")
+# async def get_user(message: types.Message):
+#     user = bot.()
+#     print(user)
 
 
 @dp.message_handler(commands="Admin", state="*")
@@ -57,3 +64,10 @@ async def admin_phone_handler(message: types.Message, state: FSMContext):
     text = "Admin muoffaqiyatli yaratildi"
     await AdminState.active.set()
     await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=admin_markup())
+
+
+@dp.message_handler(lambda message: str(CREATE_TEXT), state=AdminState.active)
+async def create_handler(message: types.Message, state: FSMContext):
+    text = "Yaratish bo'limiga xush kelibsiz"
+    await CreateAdminState.begin.set()
+    await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=create_markup())

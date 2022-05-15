@@ -46,3 +46,20 @@ class AdminState(StatesGroup):
     name = State()
     phone = State()
     active = State()
+
+
+class CreateAdminState(StatesGroup):
+    speaking_file = State()
+    create_speaking = State()
+    begin = State()
+
+
+class PronunciationCreateState(StatesGroup):
+    begin = State()
+    name = State()
+    file = State()
+
+
+class CreateListeningState(StatesGroup):
+    file = State()
+    begin = State()

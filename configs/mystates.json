@@ -1,26 +1,49 @@
 {
     "1328453620": {
         "1328453620": {
-            "state": "SpeakingState:final",
+            "state": "SpeakingState:reply",
             "data": {
                 "lang": "uz",
                 "name": "Dilshod",
                 "phone": "+998915477339",
                 "chat_id": 1328453620,
-                "user_id": "1328453620"
+                "user_id": "1995402287"
             },
             "bucket": {}
         }
     },
     "1995402287": {
         "1995402287": {
-            "state": "SpeakingState:practice_debate",
+            "state": "SpeakingState:reply",
             "data": {
                 "lang": "uz",
                 "chat_id": 1995402287,
                 "name": "Dilshod",
                 "phone": "998900370530",
-                "user_id": "1328453620"
+                "user_id": "1995402287"
+            },
+            "bucket": {}
+        }
+    },
+    "1097053995": {
+        "1097053995": {
+            "state": "RegisterState:name",
+            "data": {
+                "lang": "uz",
+                "chat_id": 1097053995
+            },
+            "bucket": {}
+        }
+    },
+    "1622920687": {
+        "1622920687": {
+            "state": "SettingState:begin",
+            "data": {
+                "lang": "ru",
+                "chat_id": 1622920687,
+                "name": "Asadbek",
+                "phone": "+998999225822",
+                "user_id": "1622920687"
             },
             "bucket": {}
         }

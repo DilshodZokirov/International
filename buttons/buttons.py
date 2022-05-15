@@ -143,3 +143,35 @@ def debate_markup():
     row2 = [BACK]
     keyboard = [row1, row2]
     return ReplyKeyboardMarkup(resize_keyboard=True, keyboard=keyboard)
+
+
+# ADMIN_PROPERTIES_TEXT = "👨‍💻 Admin Properties"
+# ADMIN_CREATE = "️ Create Admin"
+CREATE_TEXT = "☑ Created"
+DELETE_TEXT = "❌ Delete"
+# ADMIN_PROPERTIES = KeyboardButton(text=ADMIN_PROPERTIES_TEXT)
+CREATE = KeyboardButton(text=CREATE_TEXT)
+DELETE = KeyboardButton(text=DELETE_TEXT)
+CREATE_SPEAKING_PRACTICE_TEXT = "🔉 Speaking Practice"
+CREATE_LISTENING_TEXT = "🎧 Listening"
+CREATE_PRONUNCIATION_TEXT = "👂 Pronunciation"
+CREATE_WRITING_TEXT = "📝 Writing"
+CREATE_SPEAKING_PRACTICE = KeyboardButton(text=CREATE_SPEAKING_PRACTICE_TEXT)
+CREATE_LISTENING = KeyboardButton(text=CREATE_LISTENING_TEXT)
+CREATE_PRONUNCIATION = KeyboardButton(text=CREATE_PRONUNCIATION_TEXT)
+CREATE_WRITING = KeyboardButton(text=CREATE_WRITING_TEXT)
+
+
+def admin_markup():
+    row1 = [CREATE, DELETE]
+    row2 = [SETTINGS]
+    keyboard = [row1, row2]
+    return ReplyKeyboardMarkup(resize_keyboard=True, keyboard=keyboard)
+
+
+def create_markup():
+    row1 = [CREATE_SPEAKING_PRACTICE, CREATE_LISTENING]
+    row2 = [CREATE_PRONUNCIATION, CREATE_WRITING]
+    row3 = [BACK]
+    keyboard = [row1, row2, row3]
+    return ReplyKeyboardMarkup(resize_keyboard=True, keyboard=keyboard)
