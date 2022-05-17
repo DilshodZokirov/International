@@ -29,8 +29,16 @@ class ListeningState(StatesGroup):
     begin = State()
 
 
+class AdminWritingState(StatesGroup):
+    begin = State()
+    name = State()
+    file = State()
+
+
 class WritingState(StatesGroup):
     begin = State()
+    names = State()
+    file = State()
 
 
 class SettingState(StatesGroup):

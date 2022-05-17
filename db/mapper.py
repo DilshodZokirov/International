@@ -1,6 +1,6 @@
 from db.model_admin import Admin
 from db.model_listening import Listening
-from db.model_pronunciation import Pronunciation
+# from db.model_pronunciation import Pronunciation
 from db.model_speaking import Speaking
 from db.model_user import User
 

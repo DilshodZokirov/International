@@ -1,3 +1,4 @@
+from db.model_admin import Admin
 from .delete import *
 from .create import *
 from aiogram import types
@@ -30,6 +31,12 @@ async def admin_check(message: types.Message, state: FSMContext):
     if not message.text.__eq__('private'):
         text = "Noto'g'ri url"
         await message.answer(text=text)
+        return
+    admin = Admin(chat_id=str(message.chat.id)).select_admin_registered()
+    if admin:
+        admin_text = "admin menu"
+        await AdminState.active.set()
+        await message.bot.send_message(text=admin_text, chat_id=message.chat.id, reply_markup=admin_markup())
         return
     text = "Tilingizni tanlang"
     await AdminState.language.set()

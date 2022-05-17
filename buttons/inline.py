@@ -1,6 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-
+from .buttons import BACK_TEXT
 from db.model_group import Group
+from db.model_writing import WritingTopic, Writing
 
 ELEMENTARY_TEXT = "Elementary"
 PRE_INTERMEDIATE_TEXT = "Pre Intermediate"
@@ -11,6 +12,32 @@ ADVANCED_TEXT = "Advanced"
 UZ_LANGUAGE_TEXT = "🇺🇿 O'zbekcha"
 RU_LANGUAGE_TEXT = "🇷🇺 Русский"
 EN_LANGUAGE_TEXT = "🇬🇧 English"
+
+
+def writing_topics_markup():
+    topics = WritingTopic().select_all_writing()
+    keyboard = InlineKeyboardMarkup()
+    back = InlineKeyboardButton(text=f"{BACK_TEXT}", callback_data=f'{BACK_TEXT}')
+    if topics:
+        for i in topics:
+            button = InlineKeyboardButton(text=i[1], callback_data=i[0])
+            keyboard.add(button)
+    keyboard.add(back)
+    return keyboard
+
+
+def get_writings_by_topics(topic_id):
+    writings = Writing(content_type=topic_id).get_writing_by_topic()
+    keyboard = InlineKeyboardMarkup()
+    back = InlineKeyboardButton(text=f"{BACK_TEXT}", callback_data=f"{BACK_TEXT}")
+    if writings:
+        for i in writings:
+            button = InlineKeyboardButton(text=i[1], callback_data=f"{i[0]}")
+            keyboard.add(button)
+    keyboard.add(back)
+    return keyboard
+
+
 
 
 def language_inline_markup():
