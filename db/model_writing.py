@@ -31,6 +31,11 @@ class Writing(Transactions):
         params = (self.content_type,)
         return self.execute(sql, params, fetchall=True)
 
+    def delete_writing_by_id(self):
+        sql: str = "delete from writing where id = %s"
+        params = (self.id,)
+        return self.execute(sql,params,commit=True)
+
 
 class WritingTopic(Transactions):
     def __init__(self, unique_id: str = None, name: str = None):

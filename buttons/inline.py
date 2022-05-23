@@ -1,4 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
+from db.model_pronunciation import Materials
+from db.model_speaking import Speaking
 from .buttons import BACK_TEXT
 from db.model_group import Group
 from db.model_writing import WritingTopic, Writing
@@ -38,6 +41,37 @@ def get_writings_by_topics(topic_id):
     return keyboard
 
 
+def document_materials_markup():
+    markup = InlineKeyboardMarkup()
+    documents = Materials().select_by_document()
+    back = InlineKeyboardButton(text=BACK_TEXT, callback_data=BACK_TEXT)
+    for i in documents:
+        button = InlineKeyboardButton(text=i[1],callback_data=i[0])
+        markup.add(button)
+    markup.add(back)
+    return markup
+
+
+def video_materials_markup():
+    markup = InlineKeyboardMarkup()
+    documents = Materials().select_by_video()
+    back = InlineKeyboardButton(text=BACK_TEXT, callback_data=BACK_TEXT)
+    for i in documents:
+        button = InlineKeyboardButton(text=i[1],callback_data=i[0])
+        markup.add(button)
+    markup.add(back)
+    return markup
+
+
+def audio_materials_markup():
+    markup = InlineKeyboardMarkup()
+    documents = Materials().select_by_audio()
+    back = InlineKeyboardButton(text=BACK_TEXT, callback_data=BACK_TEXT)
+    for i in documents:
+        button = InlineKeyboardButton(text=i[1],callback_data=i[0])
+        markup.add(button)
+    markup.add(back)
+    return markup
 
 
 def language_inline_markup():
@@ -71,3 +105,6 @@ def all_groups():
         keyboard.add(InlineKeyboardButton(text=user.name, callback_data=f'{user.id}+{user.created_by}'))
     keyboard.add(InlineKeyboardButton(text="🔙 Back", callback_data='back'))
     return None if len(users) == 0 else keyboard
+
+
+

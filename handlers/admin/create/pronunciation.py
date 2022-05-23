@@ -1,13 +1,14 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from buttons.buttons import CREATE_PRONUNCIATION_TEXT, back_markup, BACK_TEXT, create_markup
+from buttons.buttons import CREATE_PRONUNCIATION_TEXT, back_markup, BACK_TEXT, create_markup, CREATE_MATERIALS
 from db.mapper import insert_pronunciation
+from db.model_pronunciation import Materials
 from dispatch import dp, bot
 from states import CreateAdminState, PronunciationCreateState
 
 
-@dp.message_handler(lambda message: str(message.text).__eq__(CREATE_PRONUNCIATION_TEXT), state=CreateAdminState.begin)
+@dp.message_handler(lambda message: str(message.text).__eq__(CREATE_MATERIALS), state=CreateAdminState.begin)
 async def create_pronunciation_handler(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         pass
@@ -41,10 +42,9 @@ async def pronunciation_video_file_handler(message: types.Message, state: FSMCon
         file_info = await bot.get_file(file_id=file_id)
         data['file'] = file_info.file_id
         data['created_by'] = message.chat.id
-        data['content_type'] = "video"
-    pron = insert_pronunciation(data=data)
-    pron.insert_pronunciation()
-    text = "Muaffaqiyatli yaratildi"
+    Materials(name=data['name'], material=data['file'],
+              created_by=data['created_by'], content_type='video').insert_material()
+    text = "Muvaffaqiyatli yaratildi"
     await CreateAdminState.begin.set()
     await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=create_markup())
 
@@ -56,10 +56,9 @@ async def pronunciation_audio_file_handler(message: types.Message, state: FSMCon
         file_info = await bot.get_file(file_id=file_id)
         data['file'] = file_info.file_id
         data['created_by'] = message.chat.id
-        data['content_type'] = "audio"
-    pron = insert_pronunciation(data=data)
-    pron.insert_pronunciation()
-    text = "Muaffaqiyatli yaratildi"
+    Materials(name=data['name'], material=data['file'],
+              created_by=data['created_by'], content_type='audio').insert_material()
+    text = "Muvaffaqiyatli yaratildi"
     await CreateAdminState.begin.set()
     await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=create_markup())
 
@@ -70,3 +69,9 @@ async def pronunciation_audio_file_handler(message: types.Message, state: FSMCon
         file_id = message.document.file_id
         file_info = await bot.get_file(file_id=file_id)
         data['file'] = file_info.file_id
+        data['created_by'] = message.chat.id
+    Materials(name=data['name'], material=data['file'],
+              created_by=data['created_by'], content_type='document').insert_material()
+    text = "Muvaffaqiyatli yaratildi"
+    await CreateAdminState.begin.set()
+    await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=create_markup())

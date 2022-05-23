@@ -21,6 +21,10 @@ class Speaking(Transactions):
         sql: str = "select * from speaking"
         return self.execute(sql, fetchall=True)
 
+    def select_by_document(self):
+        sql: str = "select * from speaking where content_type = 'document'"
+        return self.execute(sql, fetchall=True)
+
     def select_one_speak(self):
         sql: str = "select * from speaking where id=%s"
         params = (self.id,)
@@ -30,3 +34,4 @@ class Speaking(Transactions):
         sql: str = "delete from speaking where id=%s and created_by=%s"
         params = (self.id, self.created_by)
         self.execute(sql, params, commit=True)
+

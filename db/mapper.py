@@ -1,6 +1,6 @@
 from db.model_admin import Admin
 from db.model_listening import Listening
-# from db.model_pronunciation import Pronunciation
+from db.model_pronunciation import Materials
 from db.model_speaking import Speaking
 from db.model_user import User
 
@@ -34,9 +34,9 @@ def insert_speaking(data: dict):
 
 
 def insert_pronunciation(data: dict):
-    return Pronunciation(
+    return Materials(
         name=data.get('name'),
-        pronunciation=data.get('file'),
+        material=data.get('file'),
         created_by=data.get('created_by'),
         content_type=data.get('content_type')
     )

@@ -7,12 +7,13 @@ REGISTER_BUTTON_TEXT = "®️Register"
 REGISTER_BUTTON = KeyboardButton(text=REGISTER_BUTTON_TEXT)
 PHONE_NUMBER_TEXT = "📱 Telefon"
 PHONE_NUMBER = KeyboardButton(text=PHONE_NUMBER_TEXT, request_contact=True)
-
+MATERIALS = "📚 Materials"
 EDIT_LANGUAGE_TEXT = "🇺🇿 Edit Language"
 EDIT_USERNAME_TEXT = "👤 Edit Fullname"
 EDIT_PHONE_TEXT = "📱 Edit Phone"
 EDIT_LEVEL_TEXT = "🎚 Edit Level"
 MY_CABINET_TEXT = "👨‍💻 My Cabinet"
+CREATE_MATERIALS = "📚 Materials"
 
 EDIT_LANGUAGE = KeyboardButton(text=EDIT_LANGUAGE_TEXT)
 EDIT_USERNAME = KeyboardButton(text=EDIT_USERNAME_TEXT)
@@ -118,8 +119,19 @@ def begin_markup():
 #     return ReplyKeyboardMarkup(resize_keyboard=True)
 
 
+def materials_markup():
+    buttons = ReplyKeyboardMarkup(resize_keyboard=True)
+    audio = KeyboardButton(text="Audio")
+    video = KeyboardButton(text="Video")
+    docs = KeyboardButton(text="Document")
+    back = KeyboardButton(text=BACK_TEXT)
+    buttons.add(audio,video, docs)
+    buttons.add(back)
+    return buttons
+
+
 def home_menu():
-    row1 = [SPEAKING_WITH_A_PARTNER, PRONUNCIATION]
+    row1 = [SPEAKING_WITH_A_PARTNER, MATERIALS]
     row2 = [WRITING, LISTENING]
     row3 = [SETTINGS]
     keyboard = [row1, row2, row3]
@@ -171,7 +183,7 @@ def admin_markup():
 
 def create_markup():
     row1 = [CREATE_SPEAKING_PRACTICE, CREATE_LISTENING]
-    row2 = [CREATE_PRONUNCIATION, CREATE_WRITING]
+    row2 = [CREATE_MATERIALS, CREATE_WRITING]
     row3 = [BACK]
     keyboard = [row1, row2, row3]
     return ReplyKeyboardMarkup(resize_keyboard=True, keyboard=keyboard)

@@ -23,6 +23,8 @@ class SpeakingState(StatesGroup):
 
 class PronunciationState(StatesGroup):
     begin = State()
+    name = State()
+    files = State()
 
 
 class ListeningState(StatesGroup):
@@ -60,6 +62,15 @@ class CreateAdminState(StatesGroup):
     speaking_file = State()
     create_speaking = State()
     begin = State()
+
+
+class DeleteAdminState(StatesGroup):
+    begin = State()
+
+
+class DeleteWritingState(StatesGroup):
+    begin = State()
+    deleting = State()
 
 
 class PronunciationCreateState(StatesGroup):
