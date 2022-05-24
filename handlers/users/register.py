@@ -51,6 +51,6 @@ async def phone_number_handler(message: types.Message, state: FSMContext):
         data['phone'] = message.contact.phone_number
         user = user_insert(data)
     user.insert_user()
-    text = "Muaffaqiyatli yakunlandi"
+    text = "Muvaffaqiyatli yakunlandi"
     await FinalRegisterState.begin.set()
     await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=home_menu())

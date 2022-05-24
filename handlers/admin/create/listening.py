@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-
-from buttons.buttons import CREATE_LISTENING_TEXT, back_markup, BACK_TEXT, create_markup
+from db.model_listening import Listening, ListeningMain
+from buttons.buttons import CREATE_LISTENING_TEXT, back_markup, BACK_TEXT, create_markup, complete, COMPLETE_TEXT
 from db.mapper import insert_listening
 from dispatch import dp, bot
 from states import CreateAdminState, CreateListeningState
@@ -18,16 +18,25 @@ async def create_listening_handler(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=CreateListeningState.begin)
 async def create_name_listening(message: types.Message, state: FSMContext):
-    if message.text.__eq__(BACK_TEXT):
-        async with state.proxy() as data:
-            data['name'] = message.text
+    if message.text != BACK_TEXT:
+        ListeningMain(name=message.text).insert_listening_main()
         text = "Marxamat listening uchun file tashlang (file,audio or video)"
         await CreateListeningState.file.set()
-        await message.bot.send_message(text=text, chat_id=message.chat.id)
+        await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=complete())
         return
     text = "Bosh menuga qaytdingiz"
     await CreateAdminState.begin.set()
     await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=create_markup())
+
+
+@dp.message_handler(content_types=types.ContentType.TEXT, state=CreateListeningState.file)
+async def create_file_handler(message: types.Message, state: FSMContext):
+    if message.text == COMPLETE_TEXT:
+        text = "Muvaffaqiyatli qo'shildi"
+        await CreateAdminState.begin.set()
+        await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=create_markup())
+    else:
+        await message.delete()
 
 
 @dp.message_handler(content_types=types.ContentType.AUDIO, state=CreateListeningState.file)
@@ -38,11 +47,9 @@ async def create_file_handler(message: types.Message, state: FSMContext):
         data['file'] = file_info.file_id
         data['created_by'] = message.chat.id
         data['content_type'] = "audio"
-    listening = insert_listening(data)
-    listening.insert_listening()
-    text = "Muaffaqiyatli yakunlandi"
-    await CreateAdminState.begin.set()
-    await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=create_markup())
+    last_object = ListeningMain().select_one_listening()
+    Listening(listening=data['file'],created_by=data['created_by'],
+              content_type=data['content_type'], listening_id=last_object[0]).insert_listening()
 
 
 @dp.message_handler(content_types=types.ContentType.VIDEO, state=CreateListeningState.file)
@@ -53,11 +60,9 @@ async def create_file_handler(message: types.Message, state: FSMContext):
         data['file'] = file_info.file_id
         data['created_by'] = message.chat.id
         data['content_type'] = "video"
-    listening = insert_listening(data)
-    listening.insert_listening()
-    text = "Muaffaqiyatli yakunlandi"
-    await CreateAdminState.begin.set()
-    await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=create_markup())
+    last_object = ListeningMain().select_one_listening()
+    Listening(listening=data['file'],created_by=data['created_by'],
+              content_type=data['content_type'], listening_id=last_object).insert_listening()
 
 
 @dp.message_handler(content_types=types.ContentType.DOCUMENT, state=CreateListeningState.file)
@@ -68,18 +73,15 @@ async def create_file_handler(message: types.Message, state: FSMContext):
         data['file'] = file_info.file_id
         data['created_by'] = message.chat.id
         data['content_type'] = "docs"
-    listening = insert_listening(data)
-    listening.insert_listening()
-    text = "Muaffaqiyatli yakunlandi"
-    await CreateAdminState.begin.set()
-    await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=create_markup())
+    last_object = ListeningMain().select_one_listening()
+    Listening(listening=data['file'],created_by=data['created_by'],
+              content_type=data['content_type'], listening_id=last_object).insert_listening()
 
 
 @dp.message_handler(lambda message: str(message.text).__eq__(BACK_TEXT),
                     state=[CreateListeningState.file, CreateListeningState.begin])
-async def back_listening_handler(message: types.Message, state: FSMContext):
-    async with state.proxy() as data:
-        pass
+async def back_listening_handler(message: types.Message):
+
     text = "Bosh menuga xush kelibsiz"
     await CreateAdminState.begin.set()
     await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=create_markup())

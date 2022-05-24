@@ -20,7 +20,7 @@ async def pronunciation_handler(message: types.Message, state: FSMContext):
 async def back_a_home_menu(message: types.Message, state: FSMContext):
 
     await PronunciationState.next()
-    text = "Documents"
+    text = "Documentlar"
     await message.bot.send_message(text=text, chat_id=message.chat.id,reply_markup=types.ReplyKeyboardRemove())
     await message.bot.send_message(text="Documentlarni nomi bo'yicha tanlang", chat_id=message.chat.id, reply_markup=document_materials_markup())
 
@@ -29,7 +29,7 @@ async def back_a_home_menu(message: types.Message, state: FSMContext):
 async def video_a_home_menu(message: types.Message, state: FSMContext):
 
     await PronunciationState.next()
-    text = "Videos"
+    text = "Videolar"
     await message.bot.send_message(text=text, chat_id=message.chat.id,reply_markup=types.ReplyKeyboardRemove())
     await message.bot.send_message(text="Videolarni nomi bo'yicha tanlang", chat_id=message.chat.id, reply_markup=video_materials_markup())
 
@@ -37,7 +37,7 @@ async def video_a_home_menu(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: str(message.text).__eq__("Audio"), state=PronunciationState.begin)
 async def audio_a_home_menu(message: types.Message, state: FSMContext):
     await PronunciationState.next()
-    text = "Audios"
+    text = "Audiolar"
     await message.bot.send_message(text=text, chat_id=message.chat.id,reply_markup=types.ReplyKeyboardRemove())
     await message.bot.send_message(text="Audiolarni nomi bo'yicha tanlang", chat_id=message.chat.id, reply_markup=audio_materials_markup())
 

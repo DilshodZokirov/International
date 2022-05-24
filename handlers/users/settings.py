@@ -55,8 +55,8 @@ async def begin_lang_edit(message: types.Message):
 
 @dp.callback_query_handler(state=SettingState.lang)
 async def lang_edit(query: types.CallbackQuery):
-    User(language=query.data).update_language()
-    await FinalRegisterState.begin
+    User(language=query.data, chat_id=str(query.message.chat.id)).update_language()
+    await FinalRegisterState.begin.set()
     text = "Sizning tilingiz muvafaqiyatli o'zgartirildi"
     await query.bot.send_message(text=text, chat_id=query.message.chat.id, reply_markup=home_menu())
 

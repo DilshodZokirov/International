@@ -1,5 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+from db.model_listening import ListeningMain
 from db.model_pronunciation import Materials
 from db.model_speaking import Speaking
 from .buttons import BACK_TEXT
@@ -15,6 +16,17 @@ ADVANCED_TEXT = "Advanced"
 UZ_LANGUAGE_TEXT = "🇺🇿 O'zbekcha"
 RU_LANGUAGE_TEXT = "🇷🇺 Русский"
 EN_LANGUAGE_TEXT = "🇬🇧 English"
+
+
+def listening_names():
+    markup = InlineKeyboardMarkup()
+    names = ListeningMain().select_all_listening_main()
+    back = InlineKeyboardButton(text=BACK_TEXT, callback_data=BACK_TEXT)
+    for i in names:
+        button = InlineKeyboardButton(text=i[1], callback_data=i[0])
+        markup.add(button)
+    markup.add(back)
+    return markup
 
 
 def writing_topics_markup():

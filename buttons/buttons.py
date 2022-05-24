@@ -172,7 +172,7 @@ CREATE_SPEAKING_PRACTICE = KeyboardButton(text=CREATE_SPEAKING_PRACTICE_TEXT)
 CREATE_LISTENING = KeyboardButton(text=CREATE_LISTENING_TEXT)
 CREATE_PRONUNCIATION = KeyboardButton(text=CREATE_PRONUNCIATION_TEXT)
 CREATE_WRITING = KeyboardButton(text=CREATE_WRITING_TEXT)
-
+COMPLETE_TEXT = "Yakunlash ✅"
 
 def admin_markup():
     row1 = [CREATE, DELETE]
@@ -188,3 +188,9 @@ def create_markup():
     keyboard = [row1, row2, row3]
     return ReplyKeyboardMarkup(resize_keyboard=True, keyboard=keyboard)
 
+
+def complete():
+    markup = ReplyKeyboardMarkup(resize_keyboard=True)
+    button = KeyboardButton(text=COMPLETE_TEXT)
+    markup.add(button)
+    return markup

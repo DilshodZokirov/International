@@ -44,7 +44,7 @@ def insert_pronunciation(data: dict):
 
 def insert_listening(data: dict):
     return Listening(
-        name=data.get('name'),
+        # name=data.get('name'),
         listening=data.get('file'),
         content_type=data.get("content_type"),
         created_by=data.get("created_by"),

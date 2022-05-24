@@ -32,6 +32,6 @@ class User(Transactions):
         self.execute(sql, params, commit=True)
 
     def update_language(self):
-        sql: str = "update users set language= %s where chat_id = %s"
+        sql: str = "update users set language = %s where chat_id = %s"
         params = (self.language, self.chat_id)
         self.execute(sql, params, commit=True)
