@@ -1,3 +1,6 @@
+from typing import List
+
+from db.dto import MaterialDto
 from db.transactions import Transactions
 from utils import generate_unique_id
 
@@ -21,6 +24,17 @@ class Materials(Transactions):
         sql: str = "select * from material"
         return self.execute(sql, fetchall=True)
 
+    def select_all_speak_find(self , material_name):
+        sql: str = "select * , REGEXP_MATCHES(name , %s) from material"
+        param = (f'^{material_name}',)
+        materials = self.execute(sql, param, fetchall=True)
+
+        materials_dto: List[MaterialDto] = []
+        for material in materials:
+            materials_dto.append(MaterialDto(material[0], material[1], material[2], material[3], material[4]))
+
+        return materials_dto
+
     def select_by_document(self):
         sql: str = "select * from material where content_type = 'document'"
         return self.execute(sql, fetchall=True)
@@ -38,9 +52,9 @@ class Materials(Transactions):
         params = (self.id,)
         return self.execute(sql, params, fetchone=True)
 
-    def delete_speak(self):
-        sql: str = "delete from material where id=%s and created_by=%s"
-        params = (self.id, self.created_by)
+    def delete_speak(self, _id):
+        sql: str = "delete from material where id=%s"
+        params = (_id,)
         self.execute(sql, params, commit=True)
 
 

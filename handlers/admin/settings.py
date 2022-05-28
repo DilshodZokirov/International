@@ -11,7 +11,7 @@ from states import FinalRegisterState, SettingState
 from aiogram.types import ReplyKeyboardRemove
 
 
-@dp.message_handler(lambda message: str(message.text).__eq__(SETTING_TEXT), state=FinalRegisterState)
+@dp.message_handler(lambda message: str(message.text).__eq__(SETTING_TEXT), state=FinalRegisterState.begin)
 async def settings_handlers(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         pass

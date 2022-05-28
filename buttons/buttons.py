@@ -59,9 +59,8 @@ AMERICAN = KeyboardButton(text=AMERICAN_TEXT)
 
 def settings_markup():
     row1 = [EDIT_LANGUAGE, EDIT_USERNAME]
-    row2 = [EDIT_LEVEL]
-    row3 = [MY_CABINET, BACK]
-    keyboard = [row1, row2, row3]
+    row2 = [MY_CABINET, BACK]
+    keyboard = [row1, row2]
     return ReplyKeyboardMarkup(resize_keyboard=True, keyboard=keyboard)
 
 
@@ -159,11 +158,9 @@ def debate_markup():
 
 # ADMIN_PROPERTIES_TEXT = "👨‍💻 Admin Properties"
 # ADMIN_CREATE = "️ Create Admin"
-CREATE_TEXT = "☑ Created"
-DELETE_TEXT = "❌ Delete"
+CREATE_TEXT = "☑ Create"
 # ADMIN_PROPERTIES = KeyboardButton(text=ADMIN_PROPERTIES_TEXT)
 CREATE = KeyboardButton(text=CREATE_TEXT)
-DELETE = KeyboardButton(text=DELETE_TEXT)
 CREATE_SPEAKING_PRACTICE_TEXT = "🔉 Speaking Practice"
 CREATE_LISTENING_TEXT = "🎧 Listening"
 CREATE_PRONUNCIATION_TEXT = "👂 Pronunciation"
@@ -173,6 +170,21 @@ CREATE_LISTENING = KeyboardButton(text=CREATE_LISTENING_TEXT)
 CREATE_PRONUNCIATION = KeyboardButton(text=CREATE_PRONUNCIATION_TEXT)
 CREATE_WRITING = KeyboardButton(text=CREATE_WRITING_TEXT)
 COMPLETE_TEXT = "Yakunlash ✅"
+
+
+
+
+DELETE_TEXT = "❌ Delete"
+DELETE_SPEAKING_PRACTICE_TEXT = "🔉 Speaking Delete ❌"
+DELETE_LISTENING_TEXT = "🎧 Listening Delete ❌"
+DELETE_PRONUNCIATION_TEXT = "Materials Delete ❌"
+DELETE_WRITING_TEXT = "📝 Writing Delete ❌"
+DELETE = KeyboardButton(text=DELETE_TEXT)
+DELETE_SPEAKING_PRACTICE = KeyboardButton(text=DELETE_SPEAKING_PRACTICE_TEXT)
+DELETE_LISTENING = KeyboardButton(text=DELETE_LISTENING_TEXT)
+DELETE_PRONUNCIATION = KeyboardButton(text=DELETE_PRONUNCIATION_TEXT)
+DELETE_WRITING = KeyboardButton(text=DELETE_WRITING_TEXT)
+
 
 def admin_markup():
     row1 = [CREATE, DELETE]
@@ -194,3 +206,12 @@ def complete():
     button = KeyboardButton(text=COMPLETE_TEXT)
     markup.add(button)
     return markup
+
+
+def delete_markup():
+    row1 = [DELETE_SPEAKING_PRACTICE, DELETE_LISTENING]
+    row2 = [DELETE_PRONUNCIATION_TEXT, DELETE_WRITING]
+    row3 = [BACK]
+    keyboard = [row1, row2, row3]
+    return ReplyKeyboardMarkup(resize_keyboard=True, keyboard=keyboard)
+

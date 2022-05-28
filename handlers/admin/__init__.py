@@ -4,7 +4,7 @@ from .create import *
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from buttons.buttons import phone_number_button, admin_markup, CREATE_TEXT, create_markup, DELETE_TEXT
+from buttons.buttons import phone_number_button, admin_markup, CREATE_TEXT, create_markup, DELETE_TEXT, delete_markup
 from buttons.inline import language_inline_markup
 from db.mapper import admin_insert
 from dispatch import dp, bot
@@ -81,7 +81,21 @@ async def create_handler(message: types.Message):
 
 
 @dp.message_handler(lambda message: str(message.text).__eq__(DELETE_TEXT), state=AdminState.active)
-async def delete_handler(message: types.Message):
-    text = "O'chirish uchun bo'limni tanlang"
-    await DeleteAdminState.begin.set()
-    await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=create_markup())
+async def delete_handler(message: types.Message, state: FSMContext):
+    text = "Delete bo'limiga xush kelibsiz"
+    await ProductDeleteState.begin.set()
+    await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=delete_markup())
+
+
+@dp.message_handler(lambda message: str(message.text).__eq__(BACK_TEXT), state=ProductDeleteState.begin)
+async def back_in_delete(message: types.Message):
+    text = "Bosh menu"
+    await AdminState.active.set()
+    await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=admin_markup())
+
+
+@dp.message_handler(lambda message: str(message.text).__eq__(BACK_TEXT), state=CreateAdminState.begin)
+async def back_in_create(message: types.Message):
+    text = "Bosh menu"
+    await AdminState.active.set()
+    await message.bot.send_message(text=text, chat_id=message.chat.id, reply_markup=admin_markup())

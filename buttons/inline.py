@@ -1,5 +1,8 @@
+from typing import List
+
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+from db.dto import ListeningDto, MaterialDto
 from db.model_listening import ListeningMain
 from db.model_pronunciation import Materials
 from db.model_speaking import Speaking
@@ -117,6 +120,24 @@ def all_groups():
         keyboard.add(InlineKeyboardButton(text=user.name, callback_data=f'{user.id}+{user.created_by}'))
     keyboard.add(InlineKeyboardButton(text="🔙 Back", callback_data='back'))
     return None if len(users) == 0 else keyboard
+
+def listening_delete_file_inline(listening_dto : List[ListeningDto]):
+
+    keyboard = InlineKeyboardMarkup()
+    for listening in listening_dto:
+        keyboard.add(InlineKeyboardButton(text=listening.name, callback_data=listening.unique_id))
+    keyboard.add(InlineKeyboardButton(text="🔙 Back" , callback_data='back'))
+
+    return keyboard
+
+def material_delete_file_inline(material_dto : List[MaterialDto]):
+
+    keyboard = InlineKeyboardMarkup()
+    for material in material_dto:
+        keyboard.add(InlineKeyboardButton(text=material.name, callback_data=material.unique_id))
+    keyboard.add(InlineKeyboardButton(text="🔙 Back" , callback_data='back'))
+
+    return keyboard
 
 
 

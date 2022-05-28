@@ -86,3 +86,26 @@ class PronunciationCreateState(StatesGroup):
 class CreateListeningState(StatesGroup):
     file = State()
     begin = State()
+
+
+
+
+class ProductDeleteState(StatesGroup):
+    begin = State()
+
+class DeleteListeningState(StatesGroup):
+    name = State()
+    show_listening = State()
+    delete = State()
+
+
+class PronunciationDeleteState(StatesGroup):
+    name = State()
+    show_pronunciation = State()
+    delete = State()
+
+
+class WritingDeleteState(StatesGroup):
+    name = State()
+    show_writing = State()
+    delete = State()

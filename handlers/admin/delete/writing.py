@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 
-from buttons.buttons import CREATE_WRITING_TEXT, back_markup, BACK_TEXT, create_markup, admin_markup
+from buttons.buttons import CREATE_WRITING_TEXT, back_markup, BACK_TEXT, create_markup, admin_markup, DELETE_WRITING_TEXT
 from buttons.inline import writing_topics_markup, get_writings_by_topics
 from db.model_admin import Admin
 from db.model_writing import WritingTopic, Writing
@@ -10,7 +10,7 @@ from dispatch import dp, bot
 from states import CreateAdminState, DeleteAdminState, DeleteWritingState, AdminState
 
 
-@dp.message_handler(lambda message: str(message.text).__eq__(CREATE_WRITING_TEXT),state=DeleteAdminState.begin)
+@dp.message_handler(lambda message: str(message.text).__eq__(DELETE_WRITING_TEXT),state=DeleteAdminState.begin)
 async def writing_topics(message: types.Message, state: FSMContext):
     text = "Writing mavzusini tanlang"
     await DeleteWritingState.begin.set()

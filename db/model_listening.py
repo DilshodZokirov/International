@@ -1,3 +1,6 @@
+from typing import List
+
+from db.dto import ListeningDto
 from db.transactions import Transactions
 from utils import generate_unique_id
 
@@ -20,6 +23,11 @@ class ListeningMain(Transactions):
     def select_all_listening_main(self):
         sql: str = "select * from listening_main"
         return self.execute(sql,  fetchall=True)
+
+    def delete_listening_main(self):
+        sql: str = "delete from listening_main where id = %s"
+        params = (self.id,)
+        self.execute(sql, params,commit=True)
 
 
 class Listening(Transactions):
@@ -62,3 +70,11 @@ class Listening(Transactions):
                    "VALUES (%s,%s,%s,%s,%s)"
         params = (self.id, self.listening, self.created_by, self.content_type,self.listening_id)
         self.execute(sql, params, commit=True)
+
+    def delete_listening(self , _id):
+        sql : str = 'delete from listening where id = %s'
+        param = (_id , )
+        return self.execute(sql , param , commit=True)
+
+
+
